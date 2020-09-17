@@ -1,24 +1,29 @@
-"""Imports the python function for random number generator"""
-import random
+"""Generates a string of characters based on frequency analysis of the dictionary"""
 
 
 def select_characters():
     """Defines the function used to select the letters used in the game"""
     letters = ""
     vowel = ['a', 'e', 'i', 'o', 'u']
-    consonant = ['b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l',
-                 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z']
+    vowelweight = [0.223, 0.313, 0.194, 0.194, 0.076]
+    consonant = ['b', 'c', 'd', 'f', 'g', 'h', 'j',
+                 'k', 'l', 'm', 'n', 'p', 'q', 'r',
+                 's', 't', 'v', 'w', 'x', 'y', 'z']
+    consonantweight = [0.0270, 0.0405, 0.0811, 0.0270, 0.0405, 0.0270, 0.0135,
+                       0.0135, 0.0676, 0.0542, 0.1081, 0.0542, 0.0135, 0.1216,
+                       0.1216, 0.1216, 0.0135, 0.0135, 0.0135, 0.0135, 0.0135]
     num = 0
     while num < 9:
+        from numpy.random import choice
         ans = str(input("Select letter " + str(num+1) +
                         " - Type a 'c' for a consonant or a 'v' for a vowel: "))
         if ans == "c":
-            letters += consonant[random.randint(0, 20)]
+            letters += choice(consonant, p=consonantweight)
             print("\nLetter " + str(num+1) + " is '" + letters[num] + "'")
             print("The current string is \"" + letters + "\"\n")
             num += 1
         elif ans == "v":
-            letters += vowel[random.randint(0, 4)]
+            letters += choice(vowel, p=vowelweight)
             print("\nLetter " + str(num+1) + " is '" + letters[num] + "'")
             print("The current string is \"" + letters + "\"\n")
             num += 1
