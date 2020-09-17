@@ -13,8 +13,11 @@ def select_characters():
                        0.0135, 0.0676, 0.0542, 0.1081, 0.0542, 0.0135, 0.1216,
                        0.1216, 0.1216, 0.0135, 0.0135, 0.0135, 0.0135, 0.0135]
     num = 0
+    vowelcount = 0
+    consonantcount = 0
     while num < 9:
         from numpy.random import choice
+        print("Please select a minimum of one vowel and one consonant")
         ans = str(input("Select letter " + str(num+1) +
                         " - Type a 'c' for a consonant or a 'v' for a vowel: "))
         if ans == "c":
@@ -22,15 +25,22 @@ def select_characters():
             print("\nLetter " + str(num+1) + " is '" + letters[num] + "'")
             print("The current string is \"" + letters + "\"\n")
             num += 1
+            vowelcount += 1
         elif ans == "v":
             letters += choice(vowel, p=vowelweight)
             print("\nLetter " + str(num+1) + " is '" + letters[num] + "'")
             print("The current string is \"" + letters + "\"\n")
             num += 1
+            consonantcount += 1
         else:
             print("\nPlease enter only 'c' or 'v'\n")
-    print("Here are the letters to use \"" + letters + "\"\n")
-    input(" Press enter to exit program")
+    if vowelcount >= 1 and consonantcount >= 1:
+        print("Here are the letters to use \"" + letters + "\"\n")
+        return letters
+    else:
+        print("\"" + letters + "\"" +
+              " does not contain a minimum of one vowel and one consonant\n")
+        select_characters()
 
 
 def main():
