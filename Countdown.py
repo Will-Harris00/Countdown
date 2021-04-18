@@ -16,7 +16,7 @@ def select_characters():
     vowel_count = 0
     consonant_count = 0
     print("Please select a minimum of one vowel and one consonant\n")
-    while len(letters) < 3:
+    while len(letters) < 9:
         ans = str(input("Select letter " + str((len(letters)+1)) +
                         " - Type a 'c' for a consonant or a 'v' for a vowel: "))
         if ans == "c":
@@ -35,7 +35,7 @@ def select_characters():
             print("\nPlease enter only 'c' or 'v'\n")
     if vowel_count < 1 or consonant_count < 1:
         print("\"" + letters + "\"" +
-              " does not contain a minimum of 3 vowels and 3 consonants\n")
+              " does not contain a minimum of one vowel and one consonant\n")
         select_characters()
     else:
         print("Here are the letters to use \"" + letters + "\"\n")
@@ -44,7 +44,6 @@ def select_characters():
 
 def word_combinations(letters):
     """Finds every combination of every length of the available characters"""
-    letters = "bin"
     sorted_word = "".join(sorted(letters))
     comblist = []
     from itertools import combinations
@@ -63,7 +62,7 @@ def word_combinations(letters):
 def dictionary_reader():
     """Opens words file and iterates through each line adding the words to a list"""
     sorted_dictionary = []
-    with open("3 Letter Words.txt", "r") as words:
+    with open("Dictionary Words.txt", "r") as words:
         dictionary = words.read().splitlines()
     words.close()
     normal_dictionary = [line for line in dictionary if len(line) < 10]
@@ -71,45 +70,29 @@ def dictionary_reader():
     for element in normal_dictionary:
         alphabetical = "".join(sorted(element))
         sorted_dictionary.append(alphabetical.lower())
-    print(normal_dictionary)
-    print("\n\n")
-    print(sorted_dictionary)
     return normal_dictionary, sorted_dictionary
 
 
-def solver(comblist, sorted_dictionary, normal_dictionary):
+def word_lookup(comblist, sorted_dictionary, normal_dictionary):
     wordlist = []
     wordindex = []
     for line in sorted_dictionary:
         if line in comblist:
-            wordindex.append(sorted_dictionary.index(line))
-        elif line not in comblist:
-            pass
-
-    wordlist = [normal_dictionary[i] for i in wordindex]
-    print("\n\n")
-    print(wordlist)
+            index = sorted_dictionary.index(line)
+            wordindex.append(index)
+            sorted_dictionary[index] = None
+    for element in wordindex:
+        wordlist.append(normal_dictionary[element])
     print(wordindex)
+    print(wordlist)
     return wordlist
-
-
-def word_lookup():
-    wordmatch = []
-    longestword = []
-    length = 0
-    for current_word in sorted_dictionary:
-        if current_word in comblist:
-            index = sorted_dictionary.index(current_word)
-            longestword = len(current_word)
-            wordmatch.append(normal_dictionary[index])
-    print(wordmatch)
 
 
 def main():
     """Runs the program"""
     combinations = word_combinations(select_characters())
     standard_dictionary, sorted_dictionary = dictionary_reader()
-    solver(combinations, sorted_dictionary, standard_dictionary)
+    word_lookup(combinations, sorted_dictionary, standard_dictionary)
 
 
 if __name__ == '__main__':
