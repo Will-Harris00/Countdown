@@ -118,22 +118,22 @@ def user_guess(wordlist, longest_words):
     seconds = (round(timer, 2))
     print("\nTime taken: " + str(seconds) + " seconds\n")
     guess = response.lower()
-    if guess in wordlist:
-        if timer <= 30:
-            print("\nThe word \'" + guess + "\'" + " scores "
+    if guess in longest_words and timer <= 30:
+        print("Your answer '" + guess + "' is the longest word that can be made "
+              "with these letters\nyou scored " + str(len(guess)) + " points")
+    elif guess in wordlist:
+        if timer <= 15:
+            print("The word \'" + guess + "\'" + " scores "
                   + str(len(guess)) + " points")
-        elif timer > 30:
+        elif timer > 15:
             print("Your answer '" + guess + "' was correct but you took too long "
                   "so scored zero points")
-    elif guess == longest_words:
-        print("Your answer '" + guess + "' is the longest word that can be made "
-              "with these letters - you scored " + str(len(guess)))
     elif guess not in wordlist:
         print("Your answer '" + guess + "' was incorrect so you scored 0 points")
     print("\nThe longest words you could have made with these"
           " letters are: ")
     print(*longest_words, sep="\n")
-    print("\nThis would have scored you " + str(len(longest_words[0])) + " points")
+    print("\nThis would be worth " + str(len(longest_words[0])) + " points")
     input("\nPress any key to view a list of all the possible answers:\n")
     print(*wordlist, sep="\n")
     input("\nPress any key to exit the game")
