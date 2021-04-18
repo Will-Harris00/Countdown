@@ -44,7 +44,7 @@ def select_characters():
 
 def word_combinations(letters):
     """Finds every combination of every length of the available characters"""
-    letters = "tea"
+    letters = "bin"
     sorted_word = "".join(sorted(letters))
     comblist = []
     from itertools import combinations
@@ -67,23 +67,27 @@ def dictionary_reader():
         normal_dictionary = words.read().splitlines()
     words.close()
     for element in normal_dictionary:
+        alphabetical = "".join(sorted(element))
+        sorted_dictionary.append(alphabetical.lower())
+    return normal_dictionary, sorted_dictionary
+
+
+""" 
+    for element in normal_dictionary:
         if len(element) <= 9:
-            alphabetical = "".join(sorted(element))
-            sorted_dictionary.append(alphabetical.lower())
-    return sorted_dictionary, normal_dictionary
+"""
 
 
 def solver(comblist, sorted_dictionary, normal_dictionary):
     wordlist = []
     wordindex = []
-    for line in normal_dictionary:
-        for element in comblist:
-            if line in element:
-                wordindex.append(normal_dictionary.index(line))
-                print(wordindex)
-                wordlist.append(line)
+    for line in sorted_dictionary:
+        if line in comblist:
+            wordindex.append(sorted_dictionary.index(line))
+            sorted_dictionary.remove(line)
     print("\n\n")
     print(wordlist)
+    print(wordindex)
     return wordlist
 
 
