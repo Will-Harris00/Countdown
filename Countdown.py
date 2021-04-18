@@ -1,12 +1,23 @@
 """This module is designed to run the countdown word game"""
 import time
-import pyfiglet
 from numpy.random import choice
 
 
 def select_characters():
     """Generates a string of characters based on frequency analysis of the dictionary"""
-    ascii_banner = pyfiglet.figlet_format("Welcome To\nCountdown!")
+    ascii_banner = (
+            "__        __   _                            _____              \n" +
+            "\\ \\      / /__| | ___ ___  _ __ ___   ___  |_   _|__         \n" +
+            " \\ \\ /\\ / / _ \\ |/ __/ _ \\| '_ ` _ \\ / _ \\   | |/ _ \\  \n" +
+            "  \\ V  V /  __/ | (_| (_) | | | | | |  __/   | | (_) |        \n" +
+            "   \\_/\\_/ \\___|_|\\___\\___/|_| |_| |_|\\___|   |_|\\___/   \n" +
+            "                                                               \n" +
+            "  ____                  _      _                     _         \n" +
+            " / ___|___  _   _ _ __ | |_ __| | _____      ___ __ | |        \n" +
+            "| |   / _ \\| | | | '_ \\| __/ _` |/ _ \\ \\ /\\ / / '_ \\| |  \n" +
+            "| |__| (_) | |_| | | | | || (_| | (_) \\ V  V /| | | |_|       \n" +
+            " \\____\\___/ \\__,_|_| |_|\\__\\__,_|\\___/ \\_/\\_/ |_| |_(_)\n" +
+            "                                                                 ")
     print(ascii_banner)
     letters = ""
     vowel = ['a', 'e', 'i', 'o', 'u']
@@ -24,26 +35,26 @@ def select_characters():
     while len(letters) < 9:
         response = str(input("Select letter " + str((len(letters)+1)) + " - Type"
                              " a 'c' for a consonant or a 'v' for a vowel: "))
-        if response == "c":
-            letters += choice(consonant, p=consonantweight)
-            print("\nLetter " + str(len(letters)+1) + " is '"
-                  + letters[vowel_count+consonant_count] + "'")
-            print("The current string is \"" + letters + "\"\n")
-            vowel_count += 1
-        elif response == "v":
-            letters += choice(vowel, p=vowelweight)
-            print("\nLetter " + str(len(letters)+1) + " is '"
-                  + letters[vowel_count+consonant_count] + "'")
-            print("The current string is \"" + letters + "\"\n")
-            consonant_count += 1
+        if response == 'c':
+            if consonant_count == 6:
+                print("Vowel selected as not enough chosen")
+                letters += choice(vowel, p=vowelweight)
+                vowel_count += 1
+            else:
+                letters += choice(consonant, p=consonantweight)
+                consonant_count += 1
+        elif response == 'v':
+            if vowel_count == 6:
+                print("Consonant selected as not enough chosen")
+                letters += choice(consonant, p=consonantweight)
+                consonant_count += 1
+            else:
+                letters += choice(vowel, p=vowelweight)
+                vowel_count += 1
         else:
-            print("\nPlease enter only 'c' or 'v'\n")
-    if vowel_count < 1 or consonant_count < 1:
-        print("\"" + letters + "\"" +
-              " does not contain a minimum of one vowel and one consonant\n")
-        select_characters()
-    else:
-        print("Here are the letters to use \"" + letters + "\"\n")
+            print("Please enter only 'c' or 'v'")
+    input("Press enter to view the letters generated ")
+    print("\nHere are the letters to use \"" + letters + "\"\n")
     return letters
 
 
@@ -113,6 +124,7 @@ def user_guess(wordlist, longest_words):
     """This function allows for comparison of the users guess with the matching
     list of words and scores the user according to the length of the word choser"""
     best_word = False
+    max_time = 30
     score = 0
     print("The timer has begun\n")
     print("Please use the singular form of the english word")
@@ -123,16 +135,16 @@ def user_guess(wordlist, longest_words):
     seconds = (round(timer, 2))
     print("\nTime taken: " + str(seconds) + " seconds\n")
     guess = response.lower()
-    if guess in longest_words and timer <= 30:
-        score = str(len(longest_words))
+    if guess in longest_words and timer <= max_time:
+        score = str(len(longest_words[0]))
         print("Your answer '" + guess + "' is the longest word that can be made "
-              "with these letters\nyou scored " + str(score) + " points")
+              "with\nthese letters you scored " + str(score) + " points")
     elif guess in wordlist:
-        if timer <= 3:
+        if timer <= max_time:
             score = str(len(guess))
             print("The word \'" + guess + "\'" + " scores "
                   + score + " points")
-        elif timer > 3:
+        elif timer > max_time:
             score = 0
             print("Your answer '" + guess + "' was correct but you took too long "
                   "so scored " + str(score) + " points")
@@ -147,18 +159,17 @@ def user_guess(wordlist, longest_words):
         print("\nThis would be worth " + str(len(longest_words[0])) + " points")
     elif best_word:
         print("\nCongratulations on finding the longest word")
-    input("\nPress any key to view a list of all the possible answers:\n")
+    input("\nPress any key to view a list of all the possible answers: ")
     print(*wordlist, sep="\n")
-    ascii_banner = pyfiglet.figlet_format("Score = " + str(score))
-    print("\n\n" + ascii_banner)
     response = str(input("\nWould you like to play again? "))
-    if response == 'y' or 'yes':
-        print("Hello")
-    elif response != 'y' or 'yes':
-        input("\nPress any key to exit the game")
+    if response in ['y', 'yes']:
+        run_game()
+    elif response not in ['y', 'yes']:
+        input("\nPress enter to exit the game")
 
 
 def run_game():
+    """This function allow the game to be run multiple times after completion"""
     combinations = word_combinations(select_characters())
     standard_dictionary, sorted_dictionary = dictionary_reader()
     longest = word_lookup(combinations, sorted_dictionary, standard_dictionary)
