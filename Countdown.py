@@ -62,21 +62,17 @@ def word_combinations(letters):
 
 def dictionary_reader():
     """Opens words file and iterates through each line adding the words to a list"""
-    alphabet_word = []
     with open("3 Letter Words.txt", "r") as words:
         dictionary = words.read().splitlines()
-    for element in dictionary:
-        aword = "".join(sorted(element))
-        alphabet_word.append(aword)
     words.close()
-    print(alphabet_word)
-    return dictionary, alphabet_word
+    return dictionary
 
 
 def solver(comblist, dictionary):
     wordlist = []
     for line in dictionary:
         for element in comblist:
+            print("A")
             if element in line:
                 print("B")
                 wordlist.append(line)
