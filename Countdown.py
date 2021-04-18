@@ -101,8 +101,10 @@ def long_words(wordlist):
 
 
 def user_guess(wordlist, longest_word):
-    print(wordlist)
-    print(longest_word)
+    response = str(input("Enter your guess for the longest possible word: "))
+    guess = response.lower()
+    if guess in wordlist:
+        print(guess + " scores " + str(len(guess)) + " points")
 
 
 def main():
@@ -118,22 +120,14 @@ if __name__ == '__main__':
     main()
 
 
-# change num variable to use len(letters) thereby eliminating
-# three lines of code as well as an unnecessary variable
-
 # user start timer in one function as soon as the characters are available
 # and stop timer as soon as the user submits their answer for the longest word
 
 # user a test string for the combination of letters function
 
-# when using for comblist in dictionary be sure to compare the lists the correct
-# way round and user len <= comparison string to match every letter in the string
-
 # add ascii art to the program
 
 # use typehinting to define variable and the type of data that they contain
-
-# move any import function to the top of the module
 
 # add doc string to each line of the function to make the program easier to understand
 
@@ -141,8 +135,6 @@ if __name__ == '__main__':
 
 # allow the user to guess the longest possible word and compare this with any
 # matches between the two lists
-
-# index element in the sorted list to find the original word
 
 # use boolean true and false statement for the testing framework
 
