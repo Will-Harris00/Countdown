@@ -1,4 +1,5 @@
 """This module is designed to run the countdown word game"""
+import time
 from numpy.random import choice
 
 
@@ -101,7 +102,12 @@ def long_words(wordlist):
 
 
 def user_guess(wordlist, longest_word):
+    print("The timer has begun\n")
+    start = time.time()
     response = str(input("Enter your guess for the longest possible word: "))
+    end = time.time()
+    timer = (end - start)
+    print(timer)
     guess = response.lower()
     if guess in wordlist:
         print(guess + " scores " + str(len(guess)) + " points")
