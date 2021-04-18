@@ -43,24 +43,28 @@ def select_characters():
         return letters
 
 
-def word_combinations(letters):
+def word_combinations():
     """Finds every combination of every length of the available characters"""
-    sorted_word = "".join(sorted(letters))
-    from itertools import permutations
+    character = "abcdefghi"
+    sorted_word = "".join(sorted(character))
+    permlist = []
+    from itertools import combinations
     # starting with the longest letter string count down to zero
     for i in range(len(sorted_word), 0, -1):
         # for each length of letter strings generate all possible combinations
-        for substringletterslist in permutations(sorted_word, i):
+        for substringletterslist in combinations(sorted_word, i):
             # for each combination of letters convert list to string
             substringletters = "".join(substringletterslist)
+            permlist.append(substringletters)
             # substring_letters should then be compared with a sorted_word_list
             print(substringletters)  # printing is only here for test purposes
+    print(permlist)
     return substringletters
 
 
 def main():
     """Runs the program"""
-    word_combinations(select_characters())
+    word_combinations()
 
 
 if __name__ == '__main__':
