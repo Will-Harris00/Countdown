@@ -44,7 +44,7 @@ def select_characters():
 
 def word_combinations(letters):
     """Finds every combination of every length of the available characters"""
-    letters = "bin"
+    letters = "tea"
     sorted_word = "".join(sorted(letters))
     comblist = []
     from itertools import combinations
@@ -75,21 +75,13 @@ def dictionary_reader():
 
 def solver(comblist, sorted_dictionary, normal_dictionary):
     wordlist = []
-    index_position = ""
-    maxlength = 0
-    foundlongest = False
-    longestwordlist = []
+    wordindex = []
     for line in normal_dictionary:
         for element in comblist:
             if line in element:
+                wordindex.append(normal_dictionary.index(line))
+                print(wordindex)
                 wordlist.append(line)
-                if foundlongest == False:
-                    longestwordlist.append(line)
-                    foundlongest = True
-                    maxlength = len(line)
-                elif foundlongest == True:
-                    if len(line) == maxlength:
-                        longestwordlist.append(line)
     print("\n\n")
     print(wordlist)
     return wordlist
@@ -116,6 +108,21 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+"""
+    index_position = ""
+    maxlength = 0
+    foundlongest = False
+    longestwordlist = []
+                if foundlongest == False:
+                    longestwordlist.append(line)
+                    foundlongest = True
+                    maxlength = len(line)
+                elif foundlongest == True:
+                    if len(line) == maxlength:
+                        longestwordlist.append(line)
+"""
 
 
 # change num variable to use len(letters) thereby eliminating
