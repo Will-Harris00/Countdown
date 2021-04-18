@@ -107,10 +107,16 @@ def user_guess(wordlist, longest_word):
     response = str(input("Enter your guess for the longest possible word: "))
     end = time.time()
     timer = (end - start)
-    print(timer)
+    seconds = (round(timer, 2))
+    print("\nTime taken: " + str(seconds) + " seconds\n")
     guess = response.lower()
-    if guess in wordlist:
-        print(guess + " scores " + str(len(guess)) + " points")
+    if guess in wordlist and timer <= 30:
+        print("\nThe word \'" + guess + "\'" + " scores "
+              + str(len(guess)) + " points")
+    elif guess in wordlist and timer > 30:
+        print("You took too long - zero points scored")
+    print("\nThe longest word you could have made with these"
+          " letters is " + longest_word)
 
 
 def main():
