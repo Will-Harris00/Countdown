@@ -1,8 +1,9 @@
-"""Generates a string of characters based on frequency analysis of the dictionary"""
+"""This module is designed to run the countdown word game"""
+from numpy.random import choice
 
 
 def select_characters():
-    """Defines the function used to select the letters used in the game"""
+    """Generates a string of characters based on frequency analysis of the dictionary"""
     letters = ""
     vowel = ['a', 'e', 'i', 'o', 'u']
     vowelweight = [0.223, 0.313, 0.194, 0.194, 0.076]
@@ -12,29 +13,27 @@ def select_characters():
     consonantweight = [0.0270, 0.0405, 0.0811, 0.0270, 0.0405, 0.0270, 0.0135,
                        0.0135, 0.0676, 0.0542, 0.1081, 0.0542, 0.0135, 0.1216,
                        0.1216, 0.1216, 0.0135, 0.0135, 0.0135, 0.0135, 0.0135]
-    num = 0
-    vowelcount = 0
-    consonantcount = 0
+    vowel_count = 0
+    consonant_count = 0
     print("Please select a minimum of one vowel and one consonant\n")
-    while num < 3:
-        from numpy.random import choice
-        ans = str(input("Select letter " + str(num+1) +
+    while len(letters) < 3:
+        ans = str(input("Select letter " + str((len(letters)+1)) +
                         " - Type a 'c' for a consonant or a 'v' for a vowel: "))
         if ans == "c":
             letters += choice(consonant, p=consonantweight)
-            print("\nLetter " + str(num+1) + " is '" + letters[num] + "'")
+            print("\nLetter " + str(len(letters)+1) + " is '"
+                  + letters[vowel_count+consonant_count] + "'")
             print("The current string is \"" + letters + "\"\n")
-            num += 1
-            vowelcount += 1
+            vowel_count += 1
         elif ans == "v":
             letters += choice(vowel, p=vowelweight)
-            print("\nLetter " + str(num+1) + " is '" + letters[num] + "'")
+            print("\nLetter " + str(len(letters)+1) + " is '"
+                  + letters[vowel_count+consonant_count] + "'")
             print("The current string is \"" + letters + "\"\n")
-            num += 1
-            consonantcount += 1
+            consonant_count += 1
         else:
             print("\nPlease enter only 'c' or 'v'\n")
-    if vowelcount < 1 or consonantcount < 1:
+    if vowel_count < 1 or consonant_count < 1:
         print("\"" + letters + "\"" +
               " does not contain a minimum of one vowel and one consonant\n")
         select_characters()
@@ -119,3 +118,37 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+# change num variable to use len(letters) thereby eliminating
+# three lines of code as well as an unnecessary variable
+
+# user start timer in one function as soon as the characters are available
+# and stop timer as soon as the user submits their answer for the longest word
+
+# user a test string for the combination of letters function
+
+# when using for comblist in dictionary be sure to compare the lists the correct
+# way round and user len <= comparison string to match every letter in the string
+
+# add ascii art to the program
+
+# use typehinting to define variable and the type of data that they contain
+
+# move any import function to the top of the module
+
+# add doc string to each line of the function to make the program easier to understand
+
+# user validation for if not 'c' or 'v' where wrong input is given
+
+# allow the user to guess the longest possible word and compare this with any
+# matches between the two lists
+
+# index element in the sorted list to find the original word
+
+# use boolean true and false statement for the testing framework
+
+# get length of longest word and length of max possible word to compare user score
+# to highest possible score
+
+# use the assert function to check for possible combinations
