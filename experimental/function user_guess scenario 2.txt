@@ -1,0 +1,26 @@
+# This is the output for scenario two of the function user_guess where
+# the user guesses a correct word which is not one of the best
+# words and submits their answer within the allowed time limit
+>>>
+
+Press enter to view the letters generated 
+
+Here are the letters to use "ologohuta"
+
+The timer has begun
+
+Please use the singular form of the english word
+Enter your guess for longest possible word: tool
+
+Time taken: 4.57 seconds
+
+The word 'tool' scores 4 points
+
+The longest words you could have made with these letters are: 
+galoot
+galuth
+goolah
+
+These would each be worth 6 points
+
+Press enter to view a list of all the possible answers: 

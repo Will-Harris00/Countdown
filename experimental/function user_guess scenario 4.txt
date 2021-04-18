@@ -1,0 +1,29 @@
+# This is the output for scenario 4 of the function user_guess where
+# the user guesses a the best word of greatest length but exceeds
+# the time limit. The only difference here if that the structure
+# of the feedback is slightly different as the user is congratulated
+# on finding the longest word even though they still score zero points
+>>>
+
+Press enter to view the letters generated 
+
+Here are the letters to use "ologohuta"
+
+The timer has begun
+
+Please use the singular form of the english word
+Enter your guess for longest possible word: goolah
+
+Time taken: 41.48 seconds
+
+Your answer 'goolah' was correct but
+you took too long so scored zero points
+
+Congratulations on finding one of the longest words
+
+Here are all the longest words you could have made with these letters: 
+galoot
+galuth
+goolah
+
+Press enter to view a list of all the possible answers: 

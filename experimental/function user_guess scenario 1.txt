@@ -1,0 +1,27 @@
+# This is the output for scenario one of the function user_guess where 
+# the user guesses one of the best possible words with the longest length 
+# and submits their answer within the allowed time limit
+>>>
+
+Press enter to view the letters generated 
+
+Here are the letters to use "ologohuta"
+
+The timer has begun
+
+Please use the singular form of the english word
+Enter your guess for longest possible word: galoot
+
+Time taken: 5.56 seconds
+
+Your answer 'galoot' is one of the longest words that can be made with
+these letters, you scored 6 points
+
+Congratulations on finding one of the longest words
+
+Here are all the longest words you could have made with these letters: 
+galoot
+galuth
+goolah
+
+Press enter to view a list of all the possible answers: 

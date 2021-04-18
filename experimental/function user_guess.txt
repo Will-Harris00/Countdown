@@ -1,0 +1,104 @@
+def user_guess(word_list: List[str], longest_list: List[str], test=False):
+    """This function allows for comparison of the users guess with the
+       matching list of words and scores the user according to the length
+       of the word chosen, at the end of the game the user is shown all
+       correct answers as well as the best possible words to score highest"""
+
+    # consider that when evaluating the users guess there are only four
+    # possible scenarios when comparing their input to the correct answers
+    # First: the user guesses one of the best possible words with the
+    # longest length and submits their answer within the allowed time limit
+    # Second: the user guesses a correct word which is not one of the best
+    # words and submits their answer within the allowed time limit
+    # Third: the user guesses a correct word but exceeds the time limit
+    # Fourth: the user guesses an incorrect word
+
+    # boolean logic for checking if the users guess is one of the best words
+    best_word = False
+    # time limit for the user to submit their answer
+    max_time = 30
+    score = 0
+    print("The timer has begun\n")
+    print("Please use the singular form of the english word")
+    # timer begins as soon as the letters_string becomes visible to the user
+    start = time.time()
+    if test:
+        response = "test"
+    else:
+        response = str(input("Enter your guess for the longest possible word: "))
+    # the timer stops once the user has made their guess
+    end = time.time()
+    # from the start and finish times the time taken is calculated
+    timer = (end - start)
+    # rounding the time in seconds to an appropriate degree of accuracy
+    seconds = (round(timer, 2))
+    # informs the user of how long they took to submit their answer
+    print("\nTime taken: " + str(seconds) + " seconds\n")
+
+    # users guess has any capitalisation removed
+    guess = response.lower()
+    # from above we consider the first scenario referred to in line 202
+    if guess in longest_list and timer <= max_time:
+        # the score is updated with the number of characters the longest words
+        score = str(len(longest_list[0]))
+        # feedback is given to the user stating that they found the longest
+        # word from the letters_string and score points equal to the length
+        # of the the longest_word i.e. the length of the users guess
+        print("Your answer '" + guess + "' is one of the longest words that "
+              "can be made with\nthese letters, you scored " + score + " points")
+
+    # evaluates time taken, provided users guess is a correct answer
+    elif guess in word_list:
+        # from above we consider the second scenario referred to in line 204
+        if timer <= max_time:
+            # score is changed to the number of characters in the users guess
+            score = str(len(guess))
+            # feedback is given to the user stating that they scored points
+            # equal to the length of their answer
+            print("The word \'" + guess + "\'" + " scores "
+                  + score + " points")
+        # from above we consider the third scenario referred to in line 206
+        elif timer > max_time:
+            # feedback is given to the user stating that whilst their answer
+            # was correct, they exceeded the time limit so scored zero
+            print("Your answer '" + guess + "' was correct but"
+                  "\nyou took too long so scored zero points")
+    # from above we consider the fourth scenario referred to in line 207
+    elif guess not in word_list:
+        # feedback is given to the user stating their guess was incorrect
+        # so regardless of how quickly they answered they still scored zero
+        print("Your answer '" + guess + "' was incorrect so you scored zero points")
+
+    # check previous boolean identity to determine whether users guess is one
+    # of the longest_words, prints a different messages dependent on this logic
+    if guess in longest_list:
+        best_word = True
+        # if user did not get longest_words then the below message is displayed
+    if not best_word:
+        print("\nThe longest words you could have made with these"
+              " letters are: ")
+        # shows all solutions with the greater number of letters
+        print(*longest_list, sep="\n")
+        print("\nThese would each be worth " +
+              str(len(longest_list[0])) + " points")
+        # if user did get longest_words then a different message is displayed
+    elif best_word:
+        print("\nCongratulations on finding one of the longest words")
+        print("\nHere are all the longest words you could "
+              "have made with these letters: ")
+        # shows all alternative solutions with the greater number of letters
+        print(*longest_list, sep="\n")
+    # request user input before displaying all correct words of any length
+    input("\nPress enter to view a list of all the possible answers: ")
+    # shows all combinations of letters that make a word irrespective of length
+    print(*word_list, sep="\n")
+
+    # requests user input to determine whether to call run_game and play again
+    response = str(input("\nWould you like to play again? "))
+    # evaluates response and if one of the below, run the game from start
+    if response in ['y', 'yes', 'okay', 'sure', 'yes please']:
+        run_game()
+    # awaits any other responses not listed and will request input to exit game
+    elif response not in ['y', 'yes', 'okay', 'sure', 'yes please']:
+        input("\nPress enter to exit the game")
+    return score

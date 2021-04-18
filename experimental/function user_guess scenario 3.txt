@@ -1,0 +1,26 @@
+# This is the output for scenario 3 of the function user_guess where
+# the user guesses a correct word but exceeds the time limit
+>>>
+
+Press enter to view the letters generated 
+
+Here are the letters to use "ologohuta"
+
+The timer has begun
+
+Please use the singular form of the english word
+Enter your guess for longest possible word: goal
+
+Time taken: 44.51 seconds
+
+Your answer 'goal' was correct but
+you took too long so scored zero points
+
+The longest words you could have made with these letters are: 
+galoot
+galuth
+goolah
+
+These would each be worth 6 points
+
+Press enter to view a list of all the possible answers: 

@@ -1,0 +1,25 @@
+# This is the output for scenario four of the function user_guess where 
+# the user guesses an incorrect word and therefore scores zero points
+>>>
+
+Press enter to view the letters generated 
+
+Here are the letters to use "ologohuta"
+
+The timer has begun
+
+Please use the singular form of the english word
+Enter your guess for longest possible word: atuhogolo
+
+Time taken: 43.04 seconds
+
+Your answer 'atuhogolo' was incorrect so you scored zero points
+
+The longest words you could have made with these letters are: 
+galoot
+galuth
+goolah
+
+These would each be worth 6 points
+
+Press enter to view a list of all the possible answers: 
