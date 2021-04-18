@@ -1,11 +1,12 @@
-"""This module is designed to run the countdown letter combinations game"""
+"""This module is designed to run the countdown word game"""
 import time
 from typing import List, Tuple
 from numpy.random import choice
 
 
 def select_characters(test=False):
-    """Generates a string of characters based on frequency analysis of the dictionary"""
+    """Generates a string of characters to use in the letter combinations game
+       based on frequency analysis of the letters in the english dictionary"""
     if test:
         return "test"
     ascii_banner = (
@@ -22,63 +23,66 @@ def select_characters(test=False):
         " \\____\\___/ \\__,_|_| |_|\\__\\__,_|\\___/ \\_/\\_/ |_| |_(_)\n" +
         "                                                                 ")
     print(ascii_banner)
-    letters = ""
-    vowel = ['a', 'e', 'i', 'o', 'u']
-    vowelweight = [0.223, 0.313, 0.194, 0.194, 0.076]
-    consonant = ['b', 'c', 'd', 'f', 'g', 'h', 'j',
-                 'k', 'l', 'm', 'n', 'p', 'q', 'r',
-                 's', 't', 'v', 'w', 'x', 'y', 'z']
-    consonantweight = [0.0270, 0.0405, 0.0811, 0.0270, 0.0405, 0.0270, 0.0135,
-                       0.0135, 0.0676, 0.0542, 0.1081, 0.0542, 0.0135, 0.1216,
-                       0.1216, 0.1216, 0.0135, 0.0135, 0.0135, 0.0135, 0.0135]
+    letters_string = ""
+    vowels = ['a', 'e', 'i', 'o', 'u']
+    vowel_weight = [0.223, 0.313, 0.194, 0.194, 0.076]
+    consonants = ['b', 'c', 'd', 'f', 'g', 'h', 'j',
+                  'k', 'l', 'm', 'n', 'p', 'q', 'r',
+                  's', 't', 'v', 'w', 'x', 'y', 'z']
+    consonant_weight = [0.0270, 0.0405, 0.0811, 0.0270, 0.0405, 0.0270, 0.0135,
+                        0.0135, 0.0676, 0.0542, 0.1081, 0.0542, 0.0135, 0.1216,
+                        0.1216, 0.1216, 0.0135, 0.0135, 0.0135, 0.0135, 0.0135]
     vowel_count = 0
     consonant_count = 0
     print("Please select 9 letters")
     print("Please include a minimum of one vowel and one consonant\n")
-    while len(letters) < 9:
-        response = str(input("Select letter " + str(len(letters)+1) +
-                             " - Type a 'c' for a consonant or a 'v' for a vowel: "))
+    while len(letters_string) < 9:
+        response = str(input("Select letter " + str(len(letters_string)+1) + " -"
+                             + " Type 'c' for a consonant or 'v' for a vowel: "))
         if response == 'c':
             if consonant_count == 8:
-                print("Vowel selected as not enough chosen")
-                letters += choice(vowel, p=vowelweight)
+                print("Automatically selected a vowel to match criteria")
+                letters_string += choice(vowels, p=vowel_weight)
                 vowel_count += 1
             else:
-                letters += choice(consonant, p=consonantweight)
+                letters_string += choice(consonants, p=consonant_weight)
                 consonant_count += 1
         elif response == 'v':
             if vowel_count == 8:
-                print("Consonant selected as not enough chosen")
-                letters += choice(consonant, p=consonantweight)
+                print("Automatically selected a consonant to match criteria")
+                letters_string += choice(consonants, p=consonant_weight)
                 consonant_count += 1
             else:
-                letters += choice(vowel, p=vowelweight)
+                letters_string += choice(vowels, p=vowel_weight)
                 vowel_count += 1
         else:
-            print("Please enter only 'c' or 'v'")
+            print("Please answer with only 'c' or 'v'")
     input("Press enter to view the letters generated ")
-    print("\nHere are the letters to use \"" + letters + "\"\n")
-    return letters
+    print("\nHere are the letters to use \"" + letters_string + "\"\n")
+    return letters_string
 
 
-def word_combinations(letters: str) -> str:
-    """Finds every combination of every length of the available characters"""
-    sorted_word = "".join(sorted(letters))
-    comblist = []
+def word_combinations(letters_string: str) -> str:
+    """Finds every combination of available characters independent
+       of length and add these substrings to a list"""
+    sorted_string = "".join(sorted(letters_string))
+    comb_list = []
     from itertools import combinations
     # starting with the longest letter string count down to zero
-    for i in range(len(sorted_word), 0, -1):
+    for i in range(len(sorted_string), 0, -1):
         # for each length of letter strings generate all possible combinations
-        for substringletterslist in combinations(sorted_word, i):
+        for substring_letters_list in combinations(sorted_string, i):
             # for each combination of letters convert list to string
-            substringletters = "".join(substringletterslist)
-            comblist.append(substringletters)
+            substring_letters = "".join(substring_letters_list)
+            comb_list.append(substring_letters)
     # substring_letters should then be compared with a sorted_word_list
-    return comblist
+    print("List of combinations of letters in string:\n" + str(comb_list))
+    return comb_list
 
 
 def dictionary_reader() -> Tuple[str, str]:
-    """Opens words file and iterates through each line adding the words to a list"""
+    """Opens the text file containing the dictionary and
+       iterates through each line adding the words to a list"""
     sorted_dictionary = []
     with open("../Dictionary Words.txt", "r") as words:
         dictionary = words.read().splitlines()
@@ -88,45 +92,56 @@ def dictionary_reader() -> Tuple[str, str]:
     for element in normal_dictionary:
         alphabetical = "".join(sorted(element))
         sorted_dictionary.append(alphabetical.lower())
+    print("Here is the normal dictionary\n" + str(normal_dictionary))
+    print("\nHere is the sorted_dictionary dictionary\n" + str(sorted_dictionary))
     return normal_dictionary, sorted_dictionary
 
 
-def word_lookup(comblist: List[str], sorted_dictionary: List[str],
+def word_lookup(comb_list: List[str], sorted_dictionary: List[str],
                 normal_dictionary: List[str]) -> List[str]:
-    """"This function compares the various combinations of the string letters
-        with the sorted dictionary and adding matching words to a new list"""
-    wordlist = []
-    wordindex = []
+    """This function does a comparison for each line in the sorted_dictionary
+       to determine if it appears in the alphabetically sorted comb_list,
+       if the two items are identical it will get the index of the item
+       in the sorted_dictionary and add this to the list word_index, the next
+       step of this process involves using the list of indexes to look up the
+       original form of the word in the normal_dictionary and add this to a
+       new list called word_list which contains all the possible matches"""
+    word_list = []
+    word_index = []
     for line in sorted_dictionary:
-        if line in comblist:
+        if line in comb_list:
             index = sorted_dictionary.index(line)
-            wordindex.append(index)
+            word_index.append(index)
             sorted_dictionary[index] = None
-    for element in wordindex:
-        wordlist.append(normal_dictionary[element])
-    return wordlist
+    for element in word_index:
+        word_list.append(normal_dictionary[element])
+    return word_list
 
 
-def long_words(wordlist: List[str]) -> List[str]:
-    """This function finds the longest english word that can be made with the
-    random selection of characters"""
-    equal_length = ""
-    length = 0
-    for element in wordlist:
-        if len(element) > length:
-            length = len(element)
-            index = wordlist.index(element)
-            equal_length = wordlist[index]
-        elif len(element) == length:
-            index = wordlist.index(element)
-            equal_length += (", " + wordlist[index])
-    longest_words = equal_length.split(", ")
-    return longest_words
+def lengthy_words(word_list: List[str]) -> List[str]:
+    """This function iterates through every item in the word_list and will
+       overwrite the list longest_list with the current element if its
+       length exceeds that of any element the loop has previously checked,
+       if two words are of equal longest lengths then they are appended"""
+    longwords_string = ""
+    longest_length = 0
+    for element in word_list:
+        if len(element) > longest_length:
+            longest_length = len(element)
+            index = word_list.index(element)
+            longwords_string = word_list[index]
+        elif len(element) == longest_length:
+            index = word_list.index(element)
+            longwords_string += (", " + word_list[index])
+    longest_list = longwords_string.split(", ")
+    return longest_list
 
 
-def user_guess(wordlist: List[str], longest_words: List[str], test=False):
-    """This function allows for comparison of the users guess with the matching
-    list of words and scores the user according to the length of the word chosen"""
+def user_guess(word_list: List[str], longest_list: List[str], test=False):
+    """This function allows for comparison of the users guess with the
+       matching list of words and scores the user according to the length
+       of the word chosen, at the end of the game the user is shown all
+       correct answers as well as the best possible words to score highest"""
     best_word = False
     max_time = 30
     score = 0
@@ -141,33 +156,40 @@ def user_guess(wordlist: List[str], longest_words: List[str], test=False):
     timer = (end - start)
     seconds = (round(timer, 2))
     print("\nTime taken: " + str(seconds) + " seconds\n")
+
     guess = response.lower()
-    if guess in longest_words and timer <= max_time:
-        score = str(len(longest_words[0]))
-        print("Your answer '" + guess + "' is the longest word that can be made "
-              "with\nthese letters you scored " + score + " points")
-    elif guess in wordlist:
+    if guess in longest_list and timer <= max_time:
+        score = str(len(longest_list[0]))
+        print("Your answer '" + guess + "' is one of the longest words that "
+              "can be made with\nthese letters, you scored " + score + " points")
+
+    elif guess in word_list:
         if timer <= max_time:
             score = str(len(guess))
             print("The word \'" + guess + "\'" + " scores "
                   + score + " points")
         elif timer > max_time:
-            score = 0
-            print("Your answer '" + guess + "' was correct but you took too long "
-                  "so scored " + str(score) + " points")
-    elif guess not in wordlist:
+            print("Your answer '" + guess + "' was correct but"
+                  "\nyou took too long so scored zero points")
+    elif guess not in word_list:
         print("Your answer '" + guess + "' was incorrect so you scored 0 points")
-    if guess in longest_words:
+
+    if guess in longest_list:
         best_word = True
     if not best_word:
         print("\nThe longest words you could have made with these"
               " letters are: ")
-        print(*longest_words, sep="\n")
-        print("\nThis would be worth " + str(len(longest_words[0])) + " points")
-    elif not best_word:
-        print("\nCongratulations on finding the longest word")
-    input("\nPress any key to view a list of all the possible answers: ")
-    print(*wordlist, sep="\n")
+        print(*longest_list, sep="\n")
+        print("\nThese would each be worth " +
+              str(len(longest_list[0])) + " points")
+    elif best_word:
+        print("\nCongratulations on finding one of the longest words")
+        print("\nHere are all the longest words you could "
+              "have made with these letters: ")
+        print(*longest_list, sep="\n")
+    input("\nPress enter to view a list of all the possible answers: ")
+    print(*word_list, sep="\n")
+
     response = str(input("\nWould you like to play again? "))
     if response in ['y', 'yes', 'okay', 'sure', 'yes please']:
         run_game()
@@ -177,16 +199,18 @@ def user_guess(wordlist: List[str], longest_words: List[str], test=False):
 
 
 def run_game():
-    """This function allow the game to be run multiple times after completion"""
+    """This function contains the entire game and can be called at the end of
+     each game to play the game again as many times as the user wants"""
     combinations = word_combinations(select_characters())
     standard_dictionary, sorted_dictionary = dictionary_reader()
-    longest = word_lookup(combinations, sorted_dictionary, standard_dictionary)
-    longword = long_words(longest)
-    user_guess(longest, longword)
+    long_words = word_lookup(combinations, sorted_dictionary, standard_dictionary)
+    longest = lengthy_words(long_words)
+    user_guess(long_words, longest)
 
 
 def main():
-    """Runs the program"""
+    """This function is responsible for testing before the game begins
+       and running the first instance of the game before it is later looped"""
     if select_characters(True) == "test":
         print("select_characters test: PASSED")
     else:
@@ -196,12 +220,12 @@ def main():
         print("dictionary_reader test: PASSED")
     else:
         print("dictionary_reader test: FAILED")
-    index_list = word_lookup(word_combinations("examine"), sorted_dic, norm_dic)
+    index_list = word_lookup(word_combinations("test"), sorted_dic, norm_dic)
     if len(index_list) > 3:
         print("word_lookup test: PASSED")
     else:
         print("word_lookup test: FAILED")
-    long_matches = long_words(word_lookup("reference", index_list, norm_dic))
+    long_matches = lengthy_words(word_lookup("test", index_list, norm_dic))
     if len(long_matches) >= 1:
         print("user_guess test: PASSED")
     else:
