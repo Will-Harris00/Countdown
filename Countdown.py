@@ -35,7 +35,7 @@ def select_characters():
             print("\nPlease enter only 'c' or 'v'\n")
     if vowel_count < 1 or consonant_count < 1:
         print("\"" + letters + "\"" +
-              " does not contain a minimum of one vowel and one consonant\n")
+              " does not contain a minimum of 3 vowels and 3 consonants\n")
         select_characters()
     else:
         print("Here are the letters to use \"" + letters + "\"\n")
@@ -64,18 +64,17 @@ def dictionary_reader():
     """Opens words file and iterates through each line adding the words to a list"""
     sorted_dictionary = []
     with open("3 Letter Words.txt", "r") as words:
-        normal_dictionary = words.read().splitlines()
+        dictionary = words.read().splitlines()
     words.close()
+    normal_dictionary = [line for line in dictionary if len(line) < 10]
+    normal_dictionary = [x.lower() for x in normal_dictionary]
     for element in normal_dictionary:
         alphabetical = "".join(sorted(element))
         sorted_dictionary.append(alphabetical.lower())
+    print(normal_dictionary)
+    print("\n\n")
+    print(sorted_dictionary)
     return normal_dictionary, sorted_dictionary
-
-
-""" 
-    for element in normal_dictionary:
-        if len(element) <= 9:
-"""
 
 
 def solver(comblist, sorted_dictionary, normal_dictionary):
@@ -84,7 +83,10 @@ def solver(comblist, sorted_dictionary, normal_dictionary):
     for line in sorted_dictionary:
         if line in comblist:
             wordindex.append(sorted_dictionary.index(line))
-            sorted_dictionary.remove(line)
+        elif line not in comblist:
+            pass
+
+    wordlist = [normal_dictionary[i] for i in wordindex]
     print("\n\n")
     print(wordlist)
     print(wordindex)
@@ -112,21 +114,6 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-"""
-    index_position = ""
-    maxlength = 0
-    foundlongest = False
-    longestwordlist = []
-                if foundlongest == False:
-                    longestwordlist.append(line)
-                    foundlongest = True
-                    maxlength = len(line)
-                elif foundlongest == True:
-                    if len(line) == maxlength:
-                        longestwordlist.append(line)
-"""
 
 
 # change num variable to use len(letters) thereby eliminating
