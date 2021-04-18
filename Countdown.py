@@ -84,11 +84,12 @@ def word_lookup(comblist, sorted_dictionary, normal_dictionary):
             sorted_dictionary[index] = None
     for element in wordindex:
         wordlist.append(normal_dictionary[element])
-    print(wordlist)
     return wordlist
 
 
 def long_words(wordlist):
+    """This function finds the longest english word that can be made with the
+    random selection of characters"""
     longest_word = []
     length = 0
     for element in wordlist:
@@ -96,6 +97,11 @@ def long_words(wordlist):
             length = len(element)
             index = wordlist.index(element)
             longest_word = (wordlist[index])
+    return longest_word
+
+
+def user_guess(wordlist, longest_word):
+    print(wordlist)
     print(longest_word)
 
 
@@ -104,7 +110,8 @@ def main():
     combinations = word_combinations(select_characters())
     standard_dictionary, sorted_dictionary = dictionary_reader()
     longest = word_lookup(combinations, sorted_dictionary, standard_dictionary)
-    long_words(longest)
+    longword = long_words(longest)
+    user_guess(longest, longword)
 
 
 if __name__ == '__main__':
