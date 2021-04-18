@@ -19,17 +19,18 @@ def select_characters():
                        0.1216, 0.1216, 0.0135, 0.0135, 0.0135, 0.0135, 0.0135]
     vowel_count = 0
     consonant_count = 0
-    print("Please select a minimum of one vowel and one consonant\n")
+    print("Please select 9 letters")
+    print("Please include a minimum of one vowel and one consonant\n")
     while len(letters) < 9:
-        ans = str(input("Select letter " + str((len(letters)+1)) +
-                        " - Type a 'c' for a consonant or a 'v' for a vowel: "))
-        if ans == "c":
+        response = str(input("Select letter " + str((len(letters)+1)) + " - Type"
+                             " a 'c' for a consonant or a 'v' for a vowel: "))
+        if response == "c":
             letters += choice(consonant, p=consonantweight)
             print("\nLetter " + str(len(letters)+1) + " is '"
                   + letters[vowel_count+consonant_count] + "'")
             print("The current string is \"" + letters + "\"\n")
             vowel_count += 1
-        elif ans == "v":
+        elif response == "v":
             letters += choice(vowel, p=vowelweight)
             print("\nLetter " + str(len(letters)+1) + " is '"
                   + letters[vowel_count+consonant_count] + "'")
@@ -109,6 +110,8 @@ def long_words(wordlist):
 
 
 def user_guess(wordlist, longest_words):
+    """This function allows for comparison of the users guess with the matching
+    list of words and scores the user according to the length of the word choser"""
     best_word = False
     score = 0
     print("The timer has begun\n")
@@ -125,11 +128,11 @@ def user_guess(wordlist, longest_words):
         print("Your answer '" + guess + "' is the longest word that can be made "
               "with these letters\nyou scored " + str(score) + " points")
     elif guess in wordlist:
-        if timer <= 30:
+        if timer <= 3:
             score = str(len(guess))
             print("The word \'" + guess + "\'" + " scores "
-                  + str(score) + " points")
-        elif timer > 30:
+                  + score + " points")
+        elif timer > 3:
             score = 0
             print("Your answer '" + guess + "' was correct but you took too long "
                   "so scored " + str(score) + " points")
@@ -148,16 +151,24 @@ def user_guess(wordlist, longest_words):
     print(*wordlist, sep="\n")
     ascii_banner = pyfiglet.figlet_format("Score = " + str(score))
     print("\n\n" + ascii_banner)
-    input("\nPress any key to exit the game")
+    response = str(input("\nWould you like to play again? "))
+    if response == 'y' or 'yes':
+        print("Hello")
+    elif response != 'y' or 'yes':
+        input("\nPress any key to exit the game")
 
 
-def main():
-    """Runs the program"""
+def run_game():
     combinations = word_combinations(select_characters())
     standard_dictionary, sorted_dictionary = dictionary_reader()
     longest = word_lookup(combinations, sorted_dictionary, standard_dictionary)
     longword = long_words(longest)
     user_guess(longest, longword)
+
+
+def main():
+    """Runs the program"""
+    run_game()
 
 
 if __name__ == '__main__':
