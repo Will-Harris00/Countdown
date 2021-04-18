@@ -40,7 +40,7 @@ def select_characters():
         select_characters()
     else:
         print("Here are the letters to use \"" + letters + "\"\n")
-        return letters
+    return letters
 
 
 def word_combinations(letters):
@@ -62,17 +62,23 @@ def word_combinations(letters):
 
 def dictionary_reader():
     """Opens words file and iterates through each line adding the words to a list"""
+    alphabet_word = []
     with open("3 Letter Words.txt", "r") as words:
         dictionary = words.read().splitlines()
+    for element in dictionary:
+        aword = "".join(sorted(element))
+        alphabet_word.append(aword)
     words.close()
-    return dictionary
+    print(alphabet_word)
+    print("\n\n")
+    print(dictionary)
+    return dictionary, alphabet_word
 
 
 def solver(comblist, dictionary):
     wordlist = []
     for line in dictionary:
         for element in comblist:
-            print("A")
             if element in line:
                 print("B")
                 wordlist.append(line)
