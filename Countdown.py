@@ -45,6 +45,7 @@ def select_characters():
 
 def word_combinations(letters):
     """Finds every combination of every length of the available characters"""
+    letters = "ecesuyiro"
     sorted_word = "".join(sorted(letters))
     comblist = []
     from itertools import combinations
@@ -91,19 +92,24 @@ def word_lookup(comblist, sorted_dictionary, normal_dictionary):
 def long_words(wordlist):
     """This function finds the longest english word that can be made with the
     random selection of characters"""
-    longest_word = []
+    equal_length = ""
     length = 0
     for element in wordlist:
         if len(element) > length:
             length = len(element)
             index = wordlist.index(element)
-            longest_word = (wordlist[index])
-    return longest_word
+            equal_length = wordlist[index]
+        elif len(element) == length:
+            index = wordlist.index(element)
+            equal_length += (", " + wordlist[index])
+    longest_words = equal_length.split(", ")
+    print(equal_length)
+    print(longest_words)
+    return longest_words
 
 
-def user_guess(wordlist, longest_word):
-    print(longest_word)
-    print(wordlist)
+def user_guess(wordlist, longest_words):
+    print("\n"+str(wordlist))
     print("The timer has begun\n")
     start = time.time()
     response = str(input("Enter your guess for the longest possible word: "))
@@ -119,14 +125,15 @@ def user_guess(wordlist, longest_word):
         elif timer > 30:
             print("Your answer '" + guess + "' was correct but you took too long "
                   "so scored zero points")
-    elif guess == longest_word:
+    elif guess == longest_words:
         print("Your answer '" + guess + "' is the longest word that can be made "
               "with these letters - you scored " + str(len(guess)))
     elif guess not in wordlist:
         print("Your answer '" + guess + "' was incorrect so you scored 0 points")
-    print("\nThe longest word you could have made with these"
-          " letters was " + longest_word + "\nThis would have scored "
-          + str(len(longest_word)) + " points")
+    print("\nThe longest words you could have made with these"
+          " letters are: ")
+    print(*longest_words, sep="\n")
+    print("\nThis would have scored you " + str(len(longest_words[0])) + " points")
     input("\nPress any key to view a list of all the possible answers:\n")
     print(*wordlist, sep="\n")
     input("\nPress any key to exit the game")
@@ -144,6 +151,8 @@ def main():
 if __name__ == '__main__':
     main()
 
+
+# ensure multiple correct words of the same length appear on the longest_words list
 
 # user start timer in one function as soon as the characters are available
 # and stop timer as soon as the user submits their answer for the longest word
