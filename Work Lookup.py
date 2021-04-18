@@ -2,6 +2,23 @@
 import random
 
 
+def word_search():
+    """Test to determine how python reads the txt file by default"""
+    words = open("Dictionary Words.txt")
+    print(words.read())
+
+
+def word_lookup(substringletters):
+    """Converts each line in the txt file into an element in the list"""
+    correctwords = ""
+    with open("Dictionary Words.txt") as search:
+        for line in search:
+            line = line.rstrip()  # remove '\n' at end of line
+            if substringletters == line:
+                correctwords += line
+                print(correctwords)
+
+
 def select_characters():
     """Defines the function used to select the letters used in the game"""
     letters = ""
@@ -28,7 +45,7 @@ def select_characters():
     return letters
 
 
-def words_combinations(letters):
+def word_combinations(letters):
     """Finds every combination of every length of the available characters"""
     sorted_word = "".join(sorted(letters))
     from itertools import permutations
@@ -40,17 +57,12 @@ def words_combinations(letters):
             substringletters = "".join(substringletterslist)
             # substring_letters should then be compared with a sorted_word_list
             print(substringletters)  # printing is only here for test purposes
-
-
-def word_lookup():
-    """Imports a dictionary of all english words"""
-    words = open("Dictionary Words.txt")
-    print(words.read())
+    return substringletters
 
 
 def main():
     """Starts the function word_lookup"""
-    words_combinations(select_characters())
+    word_lookup(word_combinations(select_characters()))
 
 
 if __name__ == '__main__':
