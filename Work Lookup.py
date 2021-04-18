@@ -56,7 +56,7 @@ def word_combinations(letters):
         for substringletterslist in permutations(sorted_word, i):
             # for each combination of letters convert list to string
             substringletters = "".join(substringletterslist)
-            permlist.append(substringletterslist)
+            permlist.append(substringletters)
             # substring_letters should then be compared with a sorted_word_list
             print(substringletters)  # printing is only here for test purposes
     print(permlist)
