@@ -2,17 +2,18 @@
 
 
 def dictionary_reader():
-    words = open("Dictionary Words.txt", "r")
-    dictionary = words.readlines()
+    with open("3 Letter Words.txt", "r") as words:
+        dictionary = words.read().splitlines()
     words.close()
     print(dictionary)
     print(len(dictionary))
     for line in dictionary:
         print(line)
+        print(len(line))
 
 
 def main():
-    """Starts the function word_lookup"""
+    """Starts the function dictionary_reader"""
     dictionary_reader()
 
 
