@@ -1,10 +1,13 @@
 """This module is designed to run the countdown word game"""
 import time
+import pyfiglet
 from numpy.random import choice
 
 
 def select_characters():
     """Generates a string of characters based on frequency analysis of the dictionary"""
+    ascii_banner = pyfiglet.figlet_format("Welcome To\nCountdown!")
+    print(ascii_banner)
     letters = ""
     vowel = ['a', 'e', 'i', 'o', 'u']
     vowelweight = [0.223, 0.313, 0.194, 0.194, 0.076]
@@ -102,14 +105,14 @@ def long_words(wordlist):
             index = wordlist.index(element)
             equal_length += (", " + wordlist[index])
     longest_words = equal_length.split(", ")
-    print(equal_length)
-    print(longest_words)
     return longest_words
 
 
 def user_guess(wordlist, longest_words):
     best_word = False
+    score = 0
     print("The timer has begun\n")
+    print("Please use the singular form of the english word")
     start = time.time()
     response = str(input("Enter your guess for the longest possible word: "))
     end = time.time()
@@ -118,15 +121,18 @@ def user_guess(wordlist, longest_words):
     print("\nTime taken: " + str(seconds) + " seconds\n")
     guess = response.lower()
     if guess in longest_words and timer <= 30:
+        score = str(len(longest_words))
         print("Your answer '" + guess + "' is the longest word that can be made "
-              "with these letters\nyou scored " + str(len(guess)) + " points")
+              "with these letters\nyou scored " + str(score) + " points")
     elif guess in wordlist:
         if timer <= 30:
+            score = str(len(guess))
             print("The word \'" + guess + "\'" + " scores "
-                  + str(len(guess)) + " points")
+                  + str(score) + " points")
         elif timer > 30:
+            score = 0
             print("Your answer '" + guess + "' was correct but you took too long "
-                  "so scored zero points")
+                  "so scored " + str(score) + " points")
     elif guess not in wordlist:
         print("Your answer '" + guess + "' was incorrect so you scored 0 points")
     if guess in longest_words:
@@ -140,6 +146,8 @@ def user_guess(wordlist, longest_words):
         print("\nCongratulations on finding the longest word")
     input("\nPress any key to view a list of all the possible answers:\n")
     print(*wordlist, sep="\n")
+    ascii_banner = pyfiglet.figlet_format("Score = " + str(score))
+    print("\n\n" + ascii_banner)
     input("\nPress any key to exit the game")
 
 
@@ -156,27 +164,16 @@ if __name__ == '__main__':
     main()
 
 
-# ensure multiple correct words of the same length appear on the longest_words list
+# make timer permanent if possible
 
-# user start timer in one function as soon as the characters are available
-# and stop timer as soon as the user submits their answer for the longest word
+# use a test string for the combination of letters function
 
-# user a test string for the combination of letters function
+# use boolean true and false statement for the testing framework
 
-# add ascii art to the program
+# user validation for if not 'c' or 'v' where wrong input is given
+
+# use the assert to check for valid user input
 
 # use typehinting to define variable and the type of data that they contain
 
 # add doc string to each line of the function to make the program easier to understand
-
-# user validation for if not 'c' or 'v' where wrong input is given
-
-# allow the user to guess the longest possible word and compare this with any
-# matches between the two lists
-
-# use boolean true and false statement for the testing framework
-
-# get length of longest word and length of max possible word to compare user score
-# to highest possible score
-
-# use the assert function to check for possible combinations
