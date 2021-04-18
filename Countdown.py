@@ -1,5 +1,6 @@
 """This module is designed to run the countdown word game"""
 import time
+from typing import List, Tuple
 from numpy.random import choice
 
 
@@ -58,7 +59,7 @@ def select_characters():
     return letters
 
 
-def word_combinations(letters):
+def word_combinations(letters: str) -> str:
     """Finds every combination of every length of the available characters"""
     sorted_word = "".join(sorted(letters))
     comblist = []
@@ -74,7 +75,7 @@ def word_combinations(letters):
     return comblist
 
 
-def dictionary_reader():
+def dictionary_reader() -> Tuple[str, str]:
     """Opens words file and iterates through each line adding the words to a list"""
     sorted_dictionary = []
     with open("Dictionary Words.txt", "r") as words:
@@ -88,7 +89,8 @@ def dictionary_reader():
     return normal_dictionary, sorted_dictionary
 
 
-def word_lookup(comblist, sorted_dictionary, normal_dictionary):
+def word_lookup(comblist: List[str], sorted_dictionary: List[str],
+                normal_dictionary: List[str]) -> List[str]:
     """"This function compares the various combinations of the string letters
         with the sorted dictionary and adding matching words to a new list"""
     wordlist = []
@@ -103,7 +105,7 @@ def word_lookup(comblist, sorted_dictionary, normal_dictionary):
     return wordlist
 
 
-def long_words(wordlist):
+def long_words(wordlist: List[str]) -> List[str]:
     """This function finds the longest english word that can be made with the
     random selection of characters"""
     equal_length = ""
@@ -120,7 +122,7 @@ def long_words(wordlist):
     return longest_words
 
 
-def user_guess(wordlist, longest_words):
+def user_guess(wordlist: List[str], longest_words: List[str]):
     """This function allows for comparison of the users guess with the matching
     list of words and scores the user according to the length of the word choser"""
     best_word = False
@@ -186,16 +188,6 @@ if __name__ == '__main__':
     main()
 
 
-# make timer permanent if possible
+# add doc string to function to make the program easier to understand
 
-# use a test string for the combination of letters function
-
-# use boolean true and false statement for the testing framework
-
-# user validation for if not 'c' or 'v' where wrong input is given
-
-# use the assert to check for valid user input
-
-# use typehinting to define variable and the type of data that they contain
-
-# add doc string to each line of the function to make the program easier to understand
+# add comments to lines which require more detailed explanation
