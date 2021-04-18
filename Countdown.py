@@ -55,7 +55,6 @@ def word_combinations(letters):
             substringletters = "".join(substringletterslist)
             comblist.append(substringletters)
     # substring_letters should then be compared with a sorted_word_list
-    print(comblist)
     return comblist
 
 
@@ -74,6 +73,8 @@ def dictionary_reader():
 
 
 def word_lookup(comblist, sorted_dictionary, normal_dictionary):
+    """"This function compares the various combinations of the string letters
+        with the sorted dictionary and adding matching words to a new list"""
     wordlist = []
     wordindex = []
     for line in sorted_dictionary:
@@ -83,16 +84,27 @@ def word_lookup(comblist, sorted_dictionary, normal_dictionary):
             sorted_dictionary[index] = None
     for element in wordindex:
         wordlist.append(normal_dictionary[element])
-    print(wordindex)
     print(wordlist)
     return wordlist
+
+
+def long_words(wordlist):
+    longest_word = []
+    length = 0
+    for element in wordlist:
+        if len(element) > length:
+            length = len(element)
+            index = wordlist.index(element)
+            longest_word = (wordlist[index])
+    print(longest_word)
 
 
 def main():
     """Runs the program"""
     combinations = word_combinations(select_characters())
     standard_dictionary, sorted_dictionary = dictionary_reader()
-    word_lookup(combinations, sorted_dictionary, standard_dictionary)
+    longest = word_lookup(combinations, sorted_dictionary, standard_dictionary)
+    long_words(longest)
 
 
 if __name__ == '__main__':
