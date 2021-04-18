@@ -44,6 +44,7 @@ def select_characters():
 
 def word_combinations(letters):
     """Finds every combination of every length of the available characters"""
+    letters = "bin"
     sorted_word = "".join(sorted(letters))
     comblist = []
     from itertools import combinations
@@ -69,13 +70,10 @@ def dictionary_reader():
         if len(element) <= 9:
             alphabetical = "".join(sorted(element))
             sorted_dictionary.append(alphabetical.lower())
-    print(sorted_dictionary)
-    print("\n\n")
-    print(normal_dictionary)
     return sorted_dictionary, normal_dictionary
 
 
-def solver():
+def solver(comblist, sorted_dictionary, normal_dictionary):
     wordlist = []
     index_position = ""
     maxlength = 0
@@ -83,7 +81,7 @@ def solver():
     longestwordlist = []
     for line in normal_dictionary:
         for element in comblist:
-            if element in line:
+            if line in element:
                 wordlist.append(line)
                 if foundlongest == False:
                     longestwordlist.append(line)
@@ -97,7 +95,7 @@ def solver():
     return wordlist
 
 
-def word_lookup(comblist, sorted_dictionary, normal_dictionary):
+def word_lookup():
     wordmatch = []
     longestword = []
     length = 0
@@ -113,7 +111,7 @@ def main():
     """Runs the program"""
     combinations = word_combinations(select_characters())
     standard_dictionary, sorted_dictionary = dictionary_reader()
-    word_lookup(combinations, sorted_dictionary, standard_dictionary)
+    solver(combinations, sorted_dictionary, standard_dictionary)
 
 
 if __name__ == '__main__':
